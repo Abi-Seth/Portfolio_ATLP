@@ -332,3 +332,126 @@ body {
     width: 100%;
     height: auto;
 }
+
+
+/* responsive part*/
+@media only screen and (max-width: 600px) {
+    .navigation {
+        flex-wrap: wrap;
+        height: auto !important;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100% !important;
+    }
+
+    .logo h1 {
+        width: auto;
+    }
+
+    .nav_links {
+        width: 100% !important;
+    }
+
+    .nav_links ul {
+        width: 100% !important;
+        padding: 1em;
+    }
+
+    .hire_btn {
+        display: none !important;
+    }
+
+    .banner {
+        height: auto !important;
+    }
+
+    .banner_content {
+        flex-wrap: wrap;
+    }
+    
+    .introduction {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .introduction>p {
+        margin-bottom: 0 !important;
+    }
+
+    .btns {
+        flex-wrap: wrap;       
+        width: 100% !important;
+        margin: auto; 
+    }
+
+    .btns>button {
+        margin-top: 2em;
+        width: 90% !important;
+        padding: 1.4em !important;
+    }
+
+    .btns>p {
+        display: none !important;
+    }
+
+    .personal_image {
+        width: 100% !important;
+        height: auto !important;
+        padding: 1em 0 !important;
+        margin-top: 3em;
+    }
+
+    .about_me {
+        height: auto !important;
+        margin-top: 3em;
+    }
+    
+    .about_me_container {
+        flex-wrap: wrap;
+    }
+
+    .image_svg {
+        width: 100% !important;
+        padding: 2em;
+    }
+
+    .about_description {
+        width: 100% !important;
+        align-items: center;
+        text-align: center;
+        padding: 1em;
+    }
+
+    .about_btns {
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+
+    .about_btns>button {
+        padding: 1.5em 0.8em !important;
+        width: 90% !important;
+        margin: auto !important;
+        margin-bottom: 1em !important;
+    }
+
+    .projects_container {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .cards {
+        flex-wrap: wrap;
+    }
+
+    .project {
+        width: 98% !important;
+        margin: auto !important;
+        margin-top: 1.5em !important;
+    }
+
+
+}
