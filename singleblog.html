@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbiSeth</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="main_container">
+        <div class="banner">
+            <div class="navigation">
+                <div class="logo">
+                    <h1>Abi<span>Seth</span></h1>
+
+                    <div class="icon_toggle">
+                        <svg onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></svg>  
+                    </div>
+                </div>
+                <div class="nav_links" id="nav_links">
+                    <ul>
+                        <li><a class="active" href="">Home</a></li>
+                        <li><a href="">Exprience</a></li>
+                        <li><a href="">Talk to me</a></li>
+                        <li><a href="">About me</a></li>
+                        <li><a href="">Work</a></li>
+                    </ul>
+                </div>
+                <div class="hire_btn">
+                    <button>Hire me</button>
+                </div>
+            </div>
+        </div>
+        <div class="main_blog_container">
+            <div class="blogs">
+                <h1>How to make a personal portfolio</h1>
+                <p>This authenatication form is made for only adminstration members.</p>
+                <div class="blog_container">
+                    <div class="img">
+                        <img src="./assets/4.png" alt="">
+                    </div> 
+                    <div class="details">
+                        <p>
+                            <strong>What is a CMS</strong><br><br>
+                            Let's first take a look at what a CMS is. It stands for "Content Management System", and as the name implies, it can be used to manage the content for a website.
+                            <br>
+                            Some famous CMSs are WordPress, Contentful, Wix, Shopify, etc.
+                            <br>
+                            There is a big rise of "headless" CMS, which means a CMS that serves as an API.
+                            You have this system in place, and your website calls this API to retrieve the content.
+                            <br>
+                            CMSs are great for people who want to edit content and don't particularly know what to do with markdown, uploading files to a server, etc.
+                            <br>
+                            So when building websites for clients, it's often an excellent solution to pick a CMS that works for them.
+                            <br>
+                            What I run my blog on
+                            I run my blog on a low-tech solution.
+                            It has no CMS, but plain markdown files are parsed to plain HTML and uploaded to a server.
+                            
+                            However, this is automated, so I don't have to do that physically, but there is still no content management system to alter the content.
+                            <br><br>
+                            <strong>So how does this work, you ask?</strong>
+                            <br><br>
+                            I open my project in my IDE of choice (Visual Studio Code, or WebStorm) and start changing my markdown files.
+                            Either you edit the existing ones or create new ones for new blog posts.
+                            <br>
+                            Once I'm done, I push the changes to my git branch, which automatically triggers a GitHub action.
+                            <br>
+                            This GitHub action starts the build command on my Eleventy project (soon to be Astro), which converts all these markdown to HTML output.
+                            Once this process is done, the HTML files get placed in a "static" branch.
+                            <br>
+                            Which trigger Cloudflare pages to pull the latest changes from this branch.
+                            Cloudflare will do a git pull on this branch, and voila, the new changes are online!
+                            <br>
+                            This all happens in about a minute or so.
+                            <br><br>
+                            <strong>Why you don't always need a CMS</strong><br><br>
+                            And for me, that's the main reason I don't need a CMS. It can be such an over-engineered solution.
+                            <br>
+                            I like to write content, markdown is the easiest way to write anyway, so I prefer it.
+                            <br>
+                            And once the content is written, I don't want to hassle with logging in to a system, copy-pasting the content and pressing publish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Copyright @ abiseth. All right must be reserved</p>
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+</html>
