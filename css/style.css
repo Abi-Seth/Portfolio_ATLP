@@ -17,10 +17,15 @@
     padding: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
     background: var(--pureWhite);
     scroll-behavior: smooth;
     font-family: var(--poppins);
+    transition: .5s ease;
 }
 
 #main_container {
@@ -493,7 +498,7 @@ body {
 
 .blogs_container .blog {
     width: 30%;
-    height: 57vh;
+    height: 62vh;
     background: var(--pureWhite);
     border-radius: 0.5em;
     margin-bottom: 2em;
@@ -523,6 +528,12 @@ body {
 .blog p {
     margin: 0.8em 3.8%;
     opacity: 0.5;
+}
+
+.blog a {
+    margin: 0.5em 3.8%;
+    opacity: 0.9;
+    font-size: 0.88em;
 }
 
 .blog_container {
