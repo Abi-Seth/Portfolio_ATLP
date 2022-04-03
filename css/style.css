@@ -418,7 +418,7 @@ body {
     
 }
 
-.input button {
+.input button, .btn_delete button {
     outline: none;
     background: var(--mainBlue);
     color: var(--pureWhite);
@@ -617,7 +617,7 @@ body {
 
 .admin_dashboard .main_content {
     width: 100%;
-    height: 88%;
+    height: 90%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -634,6 +634,7 @@ body {
     margin-top: 0.4em;
     font-weight: 600;
     margin-right: 1em;
+    cursor: pointer;
 }
 
 
@@ -652,6 +653,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.admin_dashboard .main_content .messages {
+    position: relative;
+}
+
+.admin_dashboard .main_content .messages .view_messages {
+    width: 96%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background: var(--pureWhite);
+    bottom: 0.4em;
+    border-radius: 0.3em;
 }
 
 .content {
@@ -694,7 +711,7 @@ body {
     width: 90%;
     margin: auto;
     background: rgba(0, 0, 0, 0.04);
-    height: 53vh;
+    height: 60vh;
     margin-bottom: 1em;
 }
 .statistic_general {
@@ -749,7 +766,11 @@ body {
     margin-top: -1em;
 }
 
-.blog_actions button {
+.blog_actions h1 {
+    margin-bottom: 1.2em;
+}
+
+.blog_actions a, .view_messages a {
     outline: none;
     background: var(--mainBlue);
     color: var(--pureWhite);
@@ -760,7 +781,7 @@ body {
     font-family: var(--poppins);
     cursor: pointer; 
     margin-left: 4%;
-    margin-top: 0.8em;
+    margin-top: 1.2em;
 }
 
 .blog_actions .delete {
@@ -870,6 +891,338 @@ body {
 
 .file_input .file_field input {
     opacity: 0;
+}
+
+.comment_section {
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-top: -2em;
+    border-radius: 0.6em;
+    background: var(--pureWhite);
+    padding: 1em 0;
+    margin-bottom: 2em;
+}
+
+.comment_section h1 {
+    opacity: 0.9;
+    font-size: 1.2em;
+    margin: 0 2.5%;
+}
+
+.comment_section .comment_form,
+.comment_section .comments_recent {
+    height: auto;
+    width: 95%;
+    margin: auto;
+    margin-top: 1em;
+}
+
+.comment_section .comment_form h5 {
+    font-size: 1.2 !important;
+    opacity: 0.4;
+    margin-bottom: 0.8em;
+}
+
+.comment_section .comment_form .form_comment {
+    display: flex;
+}
+
+.form_comment .input {
+    width: 80% !important;
+}
+
+.form_comment .send_btn {
+    width: 20% !important;
+}
+
+.form_comment .send_btn button {
+    border-radius: 0.5em !important;
+}
+
+.form_comment .input input{
+    width: 94% !important;
+}
+
+.comments_recent h5 {
+    opacity: 0.8 !important;
+}
+
+.comment_block {
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+}
+
+.comment_block .profile {
+    height: auto;
+    width: 8%;
+}
+
+.comment_block .profile .prof {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    background: var(--mainBlue);
+    margin: 0.3em;
+    font-size: 1em;
+    color: var(--pureWhite);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment_block .comment {
+    height: auto;
+    width: 92%;
+}
+
+.comment_block  .comment p {
+    margin: 0.4em 0 ;
+    font-size: 0.84em;
+    opacity: 0.5;
+}
+
+.comment_block .comment h5 {
+    opacity: 0.8;
+}
+
+.all_messages {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.all_messages .message_container {
+    background-color: var(--pureWhite);
+    width: 99%;
+    height: 98%;
+    border-radius: 0.3em;
+    display: flex;
+}
+
+.message_container .chats {
+    width: 25%;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    overflow-y: scroll;
+}
+
+.chats::-webkit-scrollbar {
+    width: 0.3em !important;
+    background: transparent !important;
+}
+
+.chats::-webkit-scrollbar-thumb {
+    width: 0.3em !important;
+    background: #0b3ff923 !important;
+    border-radius: 0.3em !important;
+}
+
+.message_container .message_content {
+    width: 75%;
+    height: 100%;
+    position: relative;
+}
+
+.chats a {
+    outline: none;
+    background: var(--mainBlue);
+    color: var(--pureWhite);
+    padding: 1.1em 3em;
+    border: none;
+    border-radius: 2em;
+    font-size: 0.8em;
+    font-family: var(--poppins);
+    cursor: pointer; 
+    margin-left: 4%;
+    margin-top: -10% !important;
+}
+
+.chats .comment_block {
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.chats .comment_block .profile {
+    width: 25%;
+}
+
+.chats .comment_block .profile .prof {
+    margin-left: 10%;
+}
+
+.chats .active {
+    background-color: #0b3ff923;
+    border-radius: 0.3em;
+}
+
+.chat .comment_block .comment {
+    width: 75%;
+}
+
+.chats .comment_block .comment h5 {
+    font-size: 0.8em !important;
+}
+
+.chats .comment_block .comment p {
+    margin-top: 0.6em !important;
+    font-size: 0.78em !important;
+}
+
+.message_content .write {
+    width: 100%;
+    margin: 0.8em auto;
+    position: absolute;
+    bottom: 0;
+}
+
+.message_content .write .form_messages {
+    display: flex;
+    margin: 0 2%;
+    width: 98% !important;
+}
+
+.form_messages .input {
+    width: 80% !important;
+}
+
+.form_messages .input input {
+    width: 98%;
+}
+
+.form_messages .send_btn {
+    width: 20% !important;
+}
+
+.form_messages .send_btn button {
+    border-radius: 0.4em !important;
+}
+
+.message_not_sender {
+    background: rgba(0, 0, 0, 0.04);
+    padding: 1em;
+    border-radius: 0.5em;
+    width: auto !important;
+}
+
+.comment_messages {
+    width: auto !important;
+    max-width: 60% !important;
+}
+
+.comment_messages p {
+    font-size: 0.76em !important;
+}
+
+.message_reply {
+    text-align: end;
+}
+
+.prof_messages {
+    display: flex;
+    justify-content: center;
+}
+
+.message_sender {
+    background-color: var(--mainBlue);
+    padding: 0.7em 1em;
+    border-radius: 0.5em;
+    width: auto !important;
+    color: var(--pureWhite) !important;
+    opacity: 1 !important;
+}
+
+.reply_block {
+    flex-direction: row-reverse !important;
+}
+
+.message_sender h5,
+.message_not_sender h5 {
+    line-height: 2em;
+    font-size: 0.8em !important;
+}
+
+.delete_blog_container {
+    display: block !important;
+}
+
+.delete_blog_container .nav {
+    display: flex;
+    font-size: 0.8em;
+    width: 100%;
+    height: 8vh;
+}
+
+.delete_blog_container .nav .delete_selected,
+.delete_blog_container .nav .btn_delete {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.delete_selected p {
+    margin-left: 5%;
+}
+
+.btn_delete {
+    justify-content: flex-end;
+}
+
+.btn_delete button {
+    margin-right: 5%;
+    font-size: 0.9em !important;
+}
+
+.delete_container {
+    width: 100%;
+    height: auto;
+    margin: 0.8em 0;
+    padding: 0.8em 0;
+    background-color: var(--pureWhite);
+}
+
+.delete_blog_container {
+    height: auto !important;
+}
+
+.blog_list {
+    height: auto;
+    width: 98% !important;
+    margin: auto !important;
+}
+
+.blog_list .item {
+    display: flex;
+    height: 12vh;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    margin-top: 0.8em;
+    align-items: center;
+    font-size: 0.83em;
+}
+
+input[type="checkbox"] {
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.blog_list .item .image .img {
+    width: 70%;
+    height: 9vh;
+    border-radius: 0.5em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.blog_list .item .image .img img {
+    width: 100%;
+    height: auto;
 }
 
 /* responsive part*/
@@ -1093,7 +1446,6 @@ body {
     }
     
     .admin_dashboard .navbar .profile {
-        
         width: 50% !important;
     }
 }
