@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AbiSeth</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="admin_dashboard">
             <div class="navbar">
@@ -18,7 +23,7 @@
                     <input type="text" placeholder="Enter search term . . .">
                 </div>
                 <div class="profile">
-                    <p><a href="./login.html">Logout</a></p>
+                    <p onclick="logout()"><a>Logout</a></p>
                     <img src="./assets/seth.png" alt="">
                 </div>
             </div>
@@ -27,72 +32,18 @@
                     <div class="content">
                         <h1>Recent blogs</h1>
                         <p>Recent popular written blog posts</p>
-                        <div class="blogs_container">
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/1.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">Edit blog</a> 
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/2.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/3.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/3.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/1.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/2.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/1.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
-                            <div class="blog">
-                                <div class="image">
-                                    <img src="./assets/1.png" alt="">
-                                </div>
-                                <h2>How to make a portfolio</h2>
-                                <p>This authenatication form is made for only adminstration members</p>
-                                <a href="./singleblog.html">View blog</a>
-                            </div>
+                        <div class="blogs_container" id="blog_list">
                             
+                        </div>
+                        <div id="no_blogs" class="blogs_container" style="color: dodgerblue; font-size: 0.8em;">
+                            <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                No blogs published yet.
+                            </div>
+                        </div> 
+                        <div id="error_blogs" class="blogs_container" style="color: red; font-size: 0.8em;">
+                            <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                Failed to fetch blogs.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,15 +54,15 @@
                         <div class="statistic_general">
                             <div class="stat_cont" style="background: #2bce6cef;">
                                 <p>Daily reads</p>
-                                <h1>500</h1>
+                                <h1>50</h1>
                             </div>
                             <div class="stat_cont" style="background: #ed2828ec;">
                                 <p>Suggestions</p>
-                                <h1>289 K</h1>
+                                <h1>28</h1>
                             </div>
                             <div class="stat_cont" style="background: #ce512bef;">
-                                <p>Subscriptions</p>
-                                <h1>678</h1>
+                                <p>Messages</p>
+                                <h1 id="message_num">678</h1>
                             </div>
                         </div>
 
@@ -130,135 +81,177 @@
                 </div>
                 <div class="messages">
                     <div class="content">
-                        <h1>Subscriptions</h1>
+                        <h1>Messages</h1>
                         <p>These people have subscribed</p>
                         <div class="subscriptions">
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
+                            <div id="message_list">
+
+                            </div>
+
+                            <div id="no_msgs" class="blogs_container" style="color: dodgerblue; font-size: 0.8em;">
+                                <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                    No messages yet.
                                 </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Abijuru Seth</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>abiheloaf@gmail.com</p>
-                                    </div>
+                            </div> 
+                            <div id="error_msgs" class="blogs_container" style="color: red; font-size: 0.8em;">
+                                <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                    Failed to fetch messages.
                                 </div>
                             </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Uza Joyce Milex</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>milexjoyce@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Mwizere Yohan</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>mwiyohan@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Nkotabiheje Hue</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>hue192@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Ishimwe Sam</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>sam@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Habimana Eric</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>haaberic@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Kwizera Caleb</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>kwecale@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Shumbusho David</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>shudav@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="person">
-                                <div class="img">
-                                    <div class="pic pic_even"></div>
-                                </div>
-                                <div class="descript">
-                                    <div class="names">
-                                        <p>Habineza Jack</p>
-                                    </div>
-                                    <div class="email">
-                                        <p>jackhabi@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
                     <div class="view_messages">
-                        <a href="./messages.html">View messages (298)</a>
+                        <a href="./messages.html">View messages (<span id="messageNumCount">0</span>)</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        //fetch blogs
+
+        let error_blog = document.getElementById('error_blogs');
+        let no_blogs = document.getElementById('no_blogs');
+        let no_msgs = document.getElementById('no_msgs');
+        let error_msgs = document.getElementById('error_msgs');
+        let blog_list = document.getElementById('blog_list');
+        let message_list = document.getElementById('message_list');
+        let messageNum = document.getElementById('message_num');
+        let messageNumCount = document.getElementById('messageNumCount');
+        error_blog.style.display = 'none';
+        no_blogs.style.display = 'none';
+        no_msgs.style.display = 'none';
+        error_msgs.style.display = 'none';
+        blog_list.style.display = 'none';
+
+        let loader = document.getElementById('loader');
+        loader.classList.add('loading');
+
+        $(function() {
+            $('body').on('click', '.delete_now', function() {
+                deleteBlog($(this).data('blogid'));
+            });
+        });
+
+        let blogs = [];
+        let messages = [];
+        function getBlogs() {
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/articles/", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        if (data.data.length == 0) {
+                            no_blogs.style.display = 'unset';
+                        } else {
+                            blog_list.style.display = 'unset';
+                            blogs = data.data;
+                            for (let i = 0; i < blogs.length; i++) {
+                                blog_list.innerHTML += `
+                                    <div class="blog" id="blog_post">
+                                        <div class="image" onclick="window.location  = './singleblog.html?id=${blogs[i]._id}'">
+                                            <img src="${blogs[i].articleMainImage}" alt="">
+                                        </div>
+                                        <h2 onclick="window.location  = './singleblog.html?id=${blogs[i]._id}'">${blogs[i].articleTitle}</h2>
+                                        <p onclick="window.location  = './singleblog.html?id=${blogs[i]._id}'">${blogs[i].articleDescription}</p>
+                                        <a href="./singleblog.html">Edit</a>
+                                        <a class="delete_now" data-blogid='${JSON.stringify(blogs[i]._id)}' style="color: red; cursor: pointer;">Delete</a>
+                                    </div>
+                                `
+                            }
+                        }
+                    } else {
+                        error_blog.style.display = 'unset';
+                    }
+                    loader.classList.remove('loading');
+                });
+        }
+        getBlogs()
+
+        function getMessages() {
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/messages/", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        if (data.data.length == 0) {
+                            no_msgs.style.display = 'unset';
+                        } else {
+                            message_list.style.display = 'unset';
+                            messages = data.data;
+                            messageNum.innerHTML = messages.length;
+                            messageNumCount.innerHTML = messages.length;
+                            for (let i = 0; i < messages.length; i++) {
+                                let classhere = '';
+
+                                if (i % 2 != 0) {
+                                    classhere = 'pic_odd';
+                                } else {
+                                    classhere = 'pic_even';
+                                }
+                                message_list.innerHTML += `
+                                    <div class="person" onclick="window.location  = './messages.html'">
+                                        <div class="img">
+                                            <div class="pic ${classhere}"></div>
+                                        </div>
+                                        <div class="descript">
+                                            <div class="names">
+                                                <p>${messages[i].messageNames}</p>
+                                            </div>
+                                            <div class="email">
+                                                <p>${messages[i].messageEmail}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `
+
+                                if (i == (messages.length-1))
+                                    loader.classList.remove('loading');
+                            }
+                        }
+                    } else {
+                        error_msgs.style.display = 'unset';
+                        loader.classList.remove('loading');
+                    }
+                });
+        }
+        getMessages()
+
+        function deleteBlog(id) {
+            fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/articles/${JSON.parse(id)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        alert('Deleted blog successfully.');
+                        window.location = './dashboard.html'
+                    }
+                })
+        }
+        
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location = './login.html';
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

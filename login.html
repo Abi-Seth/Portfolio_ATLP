@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="banner">
             <div class="navigation">
@@ -28,23 +32,31 @@
                     </ul>
                 </div>
                 <div class="hire_btn">
-                    <button>Hire me</button>
+                    <button onclick="window.location  = './index.html#contact'">Hire me</button>
                 </div>
             </div>
             <div class="login_form">
                 <div class="form admin_form">
                     <h1>Administration login</h1>
                     <p>Get all the previleges to control the blogs and entire portfolio by logging in as an administrator.</p>
-                    <div class="form_container">
-                        <div class="input">
-                            <input type="text" placeholder="Enter your email">
+                    <div class="form_container" id="form">
+                        <div class="input_password error" id="error">
+                            <span>
+                                <h5 id="error_message"></h5>
+                            </span>
                         </div>
                         <div class="input">
-                            <input type="password" placeholder="Enter password">
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="input">
+                            <input type="password" id="password" placeholder="Enter password">
                         </div>
                         <div class="input send_btn">
                             <!-- <button>login account</button> -->
-                            <button><a href="./dashboard.html" style="color: white;">Login as admin</a></button>
+                            <button onclick="login()">
+                                <a style="color: white;" id="login">Login as admin</a>
+                                <a style="color: white;" id="processing">Processing . . .</a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -55,6 +67,118 @@
             <p>Copyright @ abiseth. All right must be reserved</p>
         </div>
     </div>
+    <script>
+
+        document.getElementById('form').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter')
+                login();
+        })
+
+        let loader = document.getElementById('loader');
+        loader.classList.add('loading');
+
+        setTimeout(() => {
+            loader.classList.remove('loading');
+        }, 4000)
+
+        let loginBtn = document.getElementById('login');
+        let processing = document.getElementById('processing');
+        processing.style.display = 'none';
+        let loading = false;
+        let msg = document.getElementById('error_message');
+        let msgContainer = document.getElementById('error');
+        function login() {
+
+            if (loading)
+                return;
+
+            msgContainer.classList.add('error');
+            let email = document.getElementById('email').value.trim();
+            let password = document.getElementById('password').value;
+            let data = {
+                email,
+                password
+            }
+            validateLoginData(data);
+        }
+
+        function validateLoginData(data) {
+
+            if (data.email.length <= 0) {
+                msg.innerHTML = 'Email address is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.email.length < 6) {
+                msg.innerHTML = 'Invalid email address';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+                msg.innerHTML = 'Invalid email address';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.password.length <= 0) {
+                msg.innerHTML = 'Password is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            // if (data.password == data.email) {
+            //     msg.innerHTML = 'Password can\'t be similar to the email';
+            //     msgContainer.classList.remove('error');
+            //     return;
+            // }
+
+            authenaticate(data);
+
+        }
+
+        async function authenaticate(data) {
+
+            loginBtn.style.display = 'none';
+            processing.style.display = 'unset';
+            loading = true;
+
+            let payload = {
+                email: data.email,
+                password: data.password
+            }
+
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/admin/authenaticate", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then((data) => {
+
+                    let email = document.getElementById('email');
+                    let password = document.getElementById('password');
+
+                    if (data.success == true && data.status == 200) {
+                        localStorage.setItem('auth_token', data.data.token);
+                        window.location = './dashboard.html';
+                    } else {
+                        msg.innerHTML = data.message;
+                        msgContainer.classList.remove('error');
+                    }
+
+                    email.value = '';
+                    password.value = '';
+                    processing.style.display = 'none';
+                    loginBtn.style.display = 'unset';
+                    loading = false;
+                });
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

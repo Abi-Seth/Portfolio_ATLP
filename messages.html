@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AbiSeth</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="admin_dashboard">
             <div class="navbar">
@@ -25,92 +30,28 @@
             <div class="main_content">
                 <div class="all_messages">
                     <div class="message_container">
-                        <div class="chats">
+                        <div class="chats" id="chat">
                             <br>
                             <a href="./dashboard.html">< Go Back To Dashboard</a>
                             <br><br>
                             
-                            <div class="comment_block active">
-                                <div class="profile">
-                                    <div class="prof"><strong>J</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>his all happens in . . .</h5>
-                                </div>
+                            <div id="message_list_active">
+
                             </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>Y</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>Facing a challenge here</h5>
-                                </div>
+                            <div id="message_list">
+
                             </div>
 
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>M</strong></div>
+                            <div id="no_msgs" class="blogs_container" style="color: dodgerblue; font-size: 0.8em;">
+                                <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                    No messages yet.
                                 </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>O</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>Not really you best </h5>
+                            </div> 
+                            <div id="error_msgs" class="blogs_container" style="color: red; font-size: 0.8em;">
+                                <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                                    Failed to fetch messages.
                                 </div>
                             </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>A</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>K</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This all happens in . . .</h5>
-                                </div>
-                            </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>J</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>THello facing a problem</h5>
-                                </div>
-                            </div>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>J</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-
-
                         </div>
                         <div class="message_content">
                             <div class="nav_bar">
@@ -118,52 +59,26 @@
                             </div>
                             <div class="messaging">
                                 <div class="original">
-                                    <div class="comment_block">
-                                        <div class="profile prof_messages">
-                                            <div class="prof"><strong>J</strong></div>
-                                        </div>
-                                        <div class="comment comment_messages">
-                                            <p>Byiringiro Jobo</p>
-                                            <div class="message_not_sender">
-                                                <h5>Once I'm done.</h5>
-                                            </div>
-                                        </div>
+                                    <div class="comment_block" id="current_chat">
+                                        
                                     </div>
                                 </div>
                                 <div class="reply">
-                                    <div class="comment_block reply_block">
-                                        <div class="profile prof_messages">
-                                            <div class="prof"><strong>A</strong></div>
-                                        </div>
-                                        <div class="comment comment_messages message_reply">
-                                            <p>Administration (me)</p>
-                                            <div class="message_sender">
-                                                <h5>Once I'm done, I push the changes to my git branch, which automatically triggers a GitHub action.</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="original">
-                                    <div class="comment_block">
-                                        <div class="profile prof_messages">
-                                            <div class="prof"><strong>J</strong></div>
-                                        </div>
-                                        <div class="comment comment_messages">
-                                            <p>Byiringiro Jobo</p>
-                                            <div class="message_not_sender">
-                                                <h5>This all happens in about a minute or so.</h5>
-                                            </div>
-                                        </div>
+                                    <div class="comment_block reply_block" id="current_chat_reply">
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="write">
-                                <div class="form_messages">
+                                <div class="form_messages" id="form">
                                     <div class="input">
-                                        <input type="text" placeholder="Reply to message" required>
+                                        <input type="text" placeholder="Reply to message" id="reply_msg" required>
                                     </div>
                                     <div class="input send_btn">
-                                        <button type="submit">Reply</button>
+                                        <button onclick="replyToChat()">
+                                            <a style="color: white;" id="comment_btn">Reply</a>
+                                            <a style="color: white;" id="processing">Sending</a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -173,6 +88,221 @@
             </div>
         </div>
     </div>
+    <script>
+        //fetch blogs
+
+        let no_msgs = document.getElementById('no_msgs');
+        let error_msgs = document.getElementById('error_msgs');
+        let message_list = document.getElementById('message_list');
+        let message_list_active = document.getElementById('message_list_active');
+        let current_chat = document.getElementById('current_chat');
+        let current_chat_reply = document.getElementById('current_chat_reply');
+        no_msgs.style.display = 'none';
+        error_msgs.style.display = 'none';
+
+        let loader = document.getElementById('loader');
+        loader.classList.add('loading');
+
+        let messages = [];
+        const commentBtn = document.getElementById('comment_btn');
+        const processing = document.getElementById('processing');
+
+        commentBtn.style.display = 'unset';
+        processing.style.display = 'none';
+
+        document.getElementById('form').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter')
+                replyToChat();
+        })
+
+        $(function() {
+            $('body').on('click', '.comment_block', function() {
+                setThisOne($(this).data('message'));
+            });
+        });
+
+        function getMessages() {
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/messages/", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        if (data.data.length == 0) {
+                            no_msgs.style.display = 'unset';
+                        } else {
+                            message_list.style.display = 'unset';
+                            messages = data.data;
+
+                            message_list_active.innerHTML += `
+                                    <div class="comment_block active">
+                                        <div class="profile">
+                                            <div class="prof"><strong>${messages[0].messageNames.split('')[0].toUpperCase()}</strong></div>
+                                        </div>
+                                        <div class="comment">
+                                            <p>${messages[0].messageNames}</p>
+                                            <h5>${messages[0].messageContent}</h5>
+                                        </div>
+                                    </div>
+                                `
+                            for (let i = (messages.length-1); i > 0; i--) {
+                                message_list.innerHTML += `
+                                    <div class="comment_block" data-message='${JSON.stringify(messages[i])}'>
+                                        <div class="profile">
+                                            <div class="prof"><strong>${messages[i].messageNames.split('')[0].toUpperCase()}</strong></div>
+                                        </div>
+                                        <div class="comment">
+                                            <p>${messages[i].messageNames}</p>
+                                            <h5>${messages[i].messageContent}</h5>
+                                        </div>
+                                    </div>
+                                `
+                            }
+
+                            setInitialChat(messages[0]);
+                        }
+                    } else {
+                        error_msgs.style.display = 'unset';
+                    }
+                    loader.classList.remove('loading');
+                });
+        }
+        getMessages()
+
+        function setThisOne(message) {
+            message_list_active.innerHTML = `
+                <div class="comment_block active">
+                    <div class="profile">
+                        <div class="prof"><strong>${message.messageNames.split('')[0].toUpperCase()}</strong></div>
+                    </div>
+                    <div class="comment">
+                        <p>${message.messageNames}</p>
+                        <h5>${message.messageContent}</h5>
+                    </div>
+                </div>
+            `
+
+            setInitialChat(message);
+        }
+        
+        let currentChat;
+        function setInitialChat(message) {
+            currentChat = message;
+            current_chat.innerHTML = `
+                <div class="profile prof_messages">
+                    <div class="prof"><strong>${message.messageNames.split('')[0].toUpperCase()}</strong></div>
+                </div>
+                <div class="comment comment_messages">
+                    <p>${message.messageNames}</p>
+                    <div class="message_not_sender">
+                        <h5>${message.messageContent}</h5>
+                    </div>
+                </div>
+            `
+
+            //checkout all answered
+            let reply_answers = localStorage.getItem('replies');
+            if (reply_answers == null) {
+                localStorage.setItem('replies', JSON.stringify([]));
+            } else {
+                JSON.parse(localStorage.getItem('replies')).forEach(element => {
+                    if (element.id == message._id) {
+                        current_chat_reply.innerHTML += `<div class="profile prof_messages">
+                            <div class="prof"><strong>A</strong></div>
+                        </div>
+                        <div class="comment comment_messages message_reply">
+                            <p>Administration (me)</p>
+                            <div class="message_sender">
+                                <h5>${element.msg}</h5>
+                            </div>
+                        </div>`;
+                    }
+                });
+            }
+
+            document.getElementById('chat').style.scrollBehavior = 'smooth';
+            document.getElementById('chat').scrollTo(0,0);
+        }
+
+
+
+        function replyToChat() {
+            const heading = '🔥 Thank you for message us. 🔥';
+            const reply = document.getElementById('reply_msg').value;
+            if (reply == '' || reply.length < 1) {
+                alert('Reply message is required');
+                return;
+            }
+
+            if (reply.length <= 10) {
+                alert('Reply message should be 10+ characters');
+                return;
+            }
+
+            commentBtn.style.display = 'none';
+            processing.style.display = 'unset';
+            loading = true;
+
+            let payload = {
+                messageHeading: heading,
+                messageContent: reply
+            }
+
+            fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/messages/${currentChat._id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then((data) => {
+
+                    if (data.success == true && data.status == 200) {
+                        current_chat_reply.innerHTML += `<div class="profile prof_messages">
+                            <div class="prof"><strong>A</strong></div>
+                        </div>
+                        <div class="comment comment_messages message_reply">
+                            <p>Administration (me)</p>
+                            <div class="message_sender">
+                                <h5>${payload.messageContent}</h5>
+                            </div>
+                        </div>`;
+
+                        // keep track of answers
+                        let reply_answers = localStorage.getItem('replies');
+                        if (reply_answers == null) {
+                            localStorage.setItem('replies', JSON.stringify([{id: currentChat._id, msg: payload.messageContent}]));
+                        } else {
+                            localStorage.setItem('replies', JSON.stringify([...JSON.parse(reply_answers) ,{id: currentChat._id, msg: payload.messageContent}]));
+                        }
+
+                        alert('Well done 🙂. You have answered 🔥');
+                    } else {
+                        alert(data.message);
+                    }
+
+                    const commentField = document.getElementById('reply_msg');
+                    commentField.value = '';
+                    processing.style.display = 'none';
+                    commentBtn.style.display = 'unset';
+                    loading = false;
+                });
+
+        }
+        
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location = './login.html';
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

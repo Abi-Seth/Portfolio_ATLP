@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="banner">
             <div class="navigation">
                 <div class="logo">
                     <h1>Abi<span>Seth</span></h1>
-
                     <div class="icon_toggle">
                         <svg onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></svg>  
                     </div>
@@ -28,7 +31,7 @@
                     </ul>
                 </div>
                 <div class="hire_btn">
-                    <button>Hire me</button>
+                    <button onclick="window.location  = './index.html#contact'">Hire me</button>
                 </div>
             </div>
         </div>
@@ -36,62 +39,17 @@
             <div class="blogs">
                 <h1>My Blogs</h1>
                 <p>This authenatication form is made for only adminstration members.</p>
-                <div class="blogs_container">
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/1.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>
+                <div class="blogs_container" id="blog_list">
+
+                </div>
+                <div id="no_blogs" class="blogs_container" style="color: dodgerblue; font-size: 0.8em;">
+                    <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                        No blogs published yet.
                     </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/2.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>       
-                    </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/3.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>
-                    </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/3.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>
-                    </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/1.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>
-                    </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/2.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>    
-                    </div>
-                    <div class="blog">
-                        <div class="image">
-                            <img src="./assets/1.png" alt="">
-                        </div>
-                        <h2>How to make a portfolio</h2>
-                        <p>This authenatication form is made for only adminstration members</p>
-                        <a href="./singleblog.html">View blog</a>
+                </div> 
+                <div id="error_blogs" class="blogs_container" style="color: red; font-size: 0.8em;">
+                    <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                        Failed to fetch blogs.
                     </div>
                 </div>
             </div>
@@ -101,6 +59,64 @@
             <p>Copyright @ abiseth. All right must be reserved</p>
         </div>
     </div>
+    <script>
+        //fetch blogs
+
+        let error_blog = document.getElementById('error_blogs');
+        let no_blogs = document.getElementById('no_blogs');
+        let blog_list = document.getElementById('blog_list');
+        error_blog.style.display = 'none';
+        no_blogs.style.display = 'none';
+        blog_list.style.display = 'none';
+        let loader = document.getElementById('loader');
+        loader.classList.add('loading');
+
+        let blogs = [];
+        function getBlogs() {
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/articles/", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        if (data.data.length == 0) {
+                            no_blogs.style.display = 'unset';
+                        } else {
+                            blog_list.style.display = 'unset';
+                            blogs = data.data;
+                            for (let i = 0; i < blogs.length; i++) {
+                                blog_list.innerHTML += `
+                                    <div class="blog" onclick="window.location = './singleblog.html?id=${blogs[i]?._id}'">
+                                        <div class="image">
+                                            <img src="${blogs[i].articleMainImage}" alt="">
+                                        </div>
+                                        <h2>${blogs[i].articleTitle}</h2>
+                                        <p>${blogs[i].articleDescription}</p>
+                                    </div>
+                                `
+
+                                if (i == (blogs.length-1))
+                                    blog_list.style.display = 'flex';
+                            }
+                            loader.classList.remove('loading');
+                        }
+                    } else {
+                        error_blog.style.display = 'unset';
+                        loader.classList.remove('loading');
+                    }
+                });
+        }
+        getBlogs()
+
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location = './login.html';
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="banner">
             <div class="navigation">
@@ -28,34 +32,45 @@
                     </ul>
                 </div>
                 <div class="hire_btn">
-                    <button>Hire me</button>
+                    <button onclick="goBack()">Go back</button>
                 </div>
             </div>
             <div class="login_form blog_form">
                 <div class="form">
                     <h1>Publish blog</h1>
                     <p>Write you blog to publish</p>
-                    <div class="form_container">
-                        <div class="input">
-                            <input type="text" placeholder="Enter blog title">
+                    <div class="form_container" id="form">
+                        <div style="width: 120%" class="input_password error" id="error">
+                            <span>
+                                <h5 id="error_message"></h5>
+                            </span>
                         </div>
                         <div class="input">
-                            <input type="text" placeholder="Enter subtitle (optional)">
+                            <input type="text" id="title" placeholder="Enter blog title">
+                        </div>
+                        <div class="input">
+                            <input type="text" id="description" placeholder="Enter subtitle (optional)">
                         </div>
                         <div class="input file_input">
-                            <div class="file_field">
-                                <div class="descript">
+                            <div class="file_field" style="overflow: hidden;">
+                                <div class="descript" id="file_descript">
                                     <h4>Drag and Drog files</h4>
                                     <p>Your files will be uploaded automatically </p>
                                 </div>
-                                <input type="file" placeholder="Enter blog banner image">
+                                <div id="preview">
+                                    <img style="width: auto; max-width: 98%; border-radius: 0.2em; margin: auto" id="image" src="" alt="">
+                                </div>
+                                <input type="file" id="file" onchange="getFile(event)" placeholder="Enter blog banner image">
                             </div>
                         </div>
                         <div class="input text_area">
-                            <textarea type="text" placeholder="Enter blog content"></textarea>
+                            <textarea id="content" type="text" placeholder="Enter blog content"></textarea>
                         </div>
                         <div class="input send_btn">
-                            <button>Save & publish blog</button>
+                            <button onclick="writeBlog()">
+                                <a style="color: white;" id="comment_btn">Save & publish blog</a>
+                                <a style="color: white;" id="processing">Publishing . . .</a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -66,6 +81,129 @@
             <p>Copyright @ abiseth. All right must be reserved</p>
         </div>
     </div>
+    <script>
+        function goBack() {
+            window.location = './dashboard.html';
+        }
+
+        const preview = document.getElementById('preview');
+        preview.style.display = 'none';
+
+        function getFile(e) {
+            document.getElementById('file_descript').style.display = 'none';
+            const reader = new FileReader();
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = () => {
+                preview.style.display = 'block';
+                document.getElementById('image').src = reader.result;
+            };
+        }
+
+        document.getElementById('form').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter')
+            writeBlog();
+        })
+
+        let msgBtn = document.getElementById('comment_btn');
+        let processing = document.getElementById('processing');
+        processing.style.display = 'none';
+        let loading = false;
+        let msg = document.getElementById('error_message');
+        let msgContainer = document.getElementById('error');
+        function writeBlog() {
+            if (loading)
+                return;
+
+            msgContainer.classList.add('error');
+            let title = document.getElementById('title').value.trim();
+            let description = document.getElementById('description').value;
+            let content = document.getElementById('content').value;
+            let file = document.getElementById('image').src;
+            let data = {
+                title,
+                description,
+                content,
+                file
+            }
+            validateBlogData(data);
+        }
+
+        function validateBlogData(data) {
+
+            if (data.title.length <= 0) {
+                msg.innerHTML = 'Title is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.description.length <= 0) {
+                msg.innerHTML = 'Description is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.content.length <= 0) {
+                msg.innerHTML = 'Content is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.file.length < 6 || data.file == undefined || data.file == null) {
+                msg.innerHTML = 'Article image is required';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            publish(data);
+
+        }
+
+        function publish(data) {
+            msgBtn.style.display = 'none';
+            processing.style.display = 'unset';
+            loading = true;
+
+            let payload = {
+                articleTitle: data.title,
+                articleDescription: data.description,
+                articleContent: data.content,
+                articleMainImage: data.file
+            }
+
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/articles/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    let title = document.getElementById('title');
+                    let description = document.getElementById('description');
+                    let content = document.getElementById('content');
+                    let file = document.getElementById('file');
+
+                    if (data.success != true && data.status != 200) {
+                        msg.innerHTML = data.message;
+                        msgContainer.classList.remove('error');
+                    }
+
+                    title.value = '';
+                    description.value = '';
+                    content.value = '';
+                    file.value = '';
+                    processing.style.display = 'none';
+                    msgBtn.style.display = 'unset';
+                    loading = false;
+
+                    if (data.success == true && data.status == 201)
+                        window.location = './dashboard.html';
+                });
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

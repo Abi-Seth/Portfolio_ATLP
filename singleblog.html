@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="banner">
             <div class="navigation">
@@ -28,61 +32,18 @@
                     </ul>
                 </div>
                 <div class="hire_btn">
-                    <button>Hire me</button>
+                    <button onclick="window.location  = './index.html#contact'">Hire me</button>
                 </div>
             </div>
         </div>
+        <div class="like" onclick="setLikes()">
+            <svg id="nolike" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0H24V24H0z"/><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" fill="rgba(9,144,232,1)"/></svg>
+            <svg id="like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0H24V24H0z"/><path d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z" fill="rgba(11,64,249,1)"/></svg>
+            <p style="margin-left: 0.3em;" id="num_likes"></p>
+        </div>
         <div class="main_blog_container">
-            <div class="blogs">
-                <h1>How to make a personal portfolio</h1>
-                <p>This authenatication form is made for only adminstration members.</p>
-                <div class="blog_container">
-                    <div class="img">
-                        <img src="./assets/4.png" alt="">
-                    </div> 
-                    <div class="details">
-                        <p>
-                            <strong>What is a CMS</strong><br><br>
-                            Let's first take a look at what a CMS is. It stands for "Content Management System", and as the name implies, it can be used to manage the content for a website.
-                            <br>
-                            Some famous CMSs are WordPress, Contentful, Wix, Shopify, etc.
-                            <br>
-                            There is a big rise of "headless" CMS, which means a CMS that serves as an API.
-                            You have this system in place, and your website calls this API to retrieve the content.
-                            <br>
-                            CMSs are great for people who want to edit content and don't particularly know what to do with markdown, uploading files to a server, etc.
-                            <br>
-                            So when building websites for clients, it's often an excellent solution to pick a CMS that works for them.
-                            <br>
-                            What I run my blog on
-                            I run my blog on a low-tech solution.
-                            It has no CMS, but plain markdown files are parsed to plain HTML and uploaded to a server.
-                            
-                            However, this is automated, so I don't have to do that physically, but there is still no content management system to alter the content.
-                            <br><br>
-                            <strong>So how does this work, you ask?</strong>
-                            <br><br>
-                            I open my project in my IDE of choice (Visual Studio Code, or WebStorm) and start changing my markdown files.
-                            Either you edit the existing ones or create new ones for new blog posts.
-                            <br>
-                            Once I'm done, I push the changes to my git branch, which automatically triggers a GitHub action.
-                            <br>
-                            This GitHub action starts the build command on my Eleventy project (soon to be Astro), which converts all these markdown to HTML output.
-                            Once this process is done, the HTML files get placed in a "static" branch.
-                            <br>
-                            Which trigger Cloudflare pages to pull the latest changes from this branch.
-                            Cloudflare will do a git pull on this branch, and voila, the new changes are online!
-                            <br>
-                            This all happens in about a minute or so.
-                            <br><br>
-                            <strong>Why you don't always need a CMS</strong><br><br>
-                            And for me, that's the main reason I don't need a CMS. It can be such an over-engineered solution.
-                            <br>
-                            I like to write content, markdown is the easiest way to write anyway, so I prefer it.
-                            <br>
-                            And once the content is written, I don't want to hassle with logging in to a system, copy-pasting the content and pressing publish.</p>
-                    </div>
-                </div>
+            <div class="blogs" id="blog_info">
+
             </div>
     
             <div class="comment_section">
@@ -91,79 +52,31 @@
                     <h5>Write you comment on the blog below and post it</h5>
                     <div class="form_comment">
                         <div class="input">
-                            <input type="text" placeholder="Enter your comment" required>
+                            <input type="text" placeholder="Enter your comment" id="comment" required>
                         </div>
                         <div class="input send_btn">
-                            <button type="submit">post comment</button>
+                            <button onclick="postComment()">
+                                <a style="color: white;" id="comment_btn">post comment</a>
+                                <a style="color: white;" id="processing">Processing . . .</a>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="comments_recent">
                     <h5>Recent comments</h5>
-                    
-                    <div class="comment_block">
-                        <div class="profile">
-                            <div class="prof"><strong>A</strong></div>
-                        </div>
-                        <div class="comment">
-                            <p>Abijuru Seth</p>
-                            <h5>This authenatication form is made for only adminstration members</h5>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>Y</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Yohaaaaa Saad</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>J</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div id="comments_block">
+
                     </div>
-                    <div class="comment_block">
-                        <div class="profile">
-                            <div class="prof"><strong>B</strong></div>
+
+                    <div id="no_blogs" style="color: dodgerblue; font-size: 0.8em; height: 30vh;">
+                        <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center; padding: 2em 0;">
+                            No comments yet.
                         </div>
-                        <div class="comment">
-                            <p>Byiringiro Saad</p>
-                            <h5>This is a single comment</h5>
-                        </div>
-                    </div>
-                    <div class="comment_block">
-                        <div class="profile">
-                            <div class="prof"><strong>K</strong></div>
-                        </div>
-                        <div class="comment">
-                            <p>Kwizera</p>
-                            <h5>This authenatication form is made for only adminstration members</h5>
-                            
-                            <div class="comment_block">
-                                <div class="profile">
-                                    <div class="prof"><strong>J</strong></div>
-                                </div>
-                                <div class="comment">
-                                    <p>Byiringiro Jobo</p>
-                                    <h5>This is a single comment</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment_block">
-                        <div class="profile">
-                            <div class="prof"><strong>A</strong></div>
-                        </div>
-                        <div class="comment">
-                            <p>Abijuru Seth</p>
-                            <h5>This authenatication form is made for only</h5>
+                    </div> 
+                    <div id="error_blogs" style="color: red; font-size: 0.8em;">
+                        <div class="blog" style="background: #ffffff; display: flex; align-items: center; justify-content: center; padding: 2em 0;">
+                            Failed to fetch comments.
                         </div>
                     </div>
 
@@ -175,6 +88,282 @@
             <p>Copyright @ abiseth. All right must be reserved</p>
         </div>
     </div>
+    <script>
+        const blog_info = document.getElementById('blog_info');
+        const no_blogs = document.getElementById('no_blogs');
+        const error_blog = document.getElementById('error_blogs');
+        const comments_block = document.getElementById('comments_block');
+        const like = document.getElementById('like');
+        const nolike = document.getElementById('nolike');
+        const num_likes = document.getElementById('num_likes');
+        like.style.display = 'none';
+        error_blog.style.display = 'none';
+        no_blogs.style.display = 'none';
+        var blog_id = '';
+        var numLikes = 0;
+        var articleComments = [];
+
+        const commentBtn = document.getElementById('comment_btn');
+        const processing = document.getElementById('processing');
+
+        commentBtn.style.display = 'unset';
+        processing.style.display = 'none';
+
+        let loader = document.getElementById('loader');
+        loader.classList.add('loading');
+
+        function getBlogInfo() {
+            let url = window.location.href;
+            let params = url.split("=");
+            let id = params[1];
+
+            if (id == null || id == undefined) {
+                window.location = './blogs.html';
+                return;
+            }
+
+            blog_id = id;
+
+            getLikes(id);
+
+            fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/articles/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    if (data.success == true && data.status == 200) {
+                        if (data.data.length == 0) {
+                            window.location = './blogs.html';
+                            loader.classList.remove('loading');
+                        } else {
+                            const blog = data.data;
+                            blog_info.innerHTML = `
+                                <h1>${blog.articleTitle}</h1>
+                                <p>${blog.articleDescription}</p>
+                                <div class="blog_container" id="blog_info">
+                                    <div class="img">
+                                        <img src="${blog.articleMainImage}" alt="">
+                                    </div> 
+                                    <div class="details">
+                                        <p>${blog.articleContent}</p>
+                                    </div>
+                                </div>
+                            `;
+
+                            numLikes = blog.articleLikes;
+                            num_likes.innerHTML = blog.articleLikes;
+
+                            if (data.data.articleComments.length == 0) {
+                                no_blogs.style.display = 'unset';
+                            } else {
+                                articleComments = data.data.articleComments;
+
+                                for (let i = 0; i < articleComments.length; i++) {
+                                    comments_block.innerHTML += `
+                                    <div class="comment_block">
+                                        <div class="profile">
+                                            <div class="prof"><strong>${articleComments[i].commenterName.split('')[0].toUpperCase()}</strong></div>
+                                        </div>
+                                        <div class="comment">
+                                            <p>${articleComments[i].commenterName}</p>
+                                            <h5>${articleComments[i].commentContent}</h5>
+                                        </div>
+                                    </div>
+                                    `
+                                }
+                            }
+                            loader.classList.remove('loading');
+
+                        }
+                    } else {
+                        window.location = './blogs.html';
+                        loader.classList.remove('loading');
+                    }
+                });
+            
+        }
+        getBlogInfo();
+
+        function getLikes(id) {
+            const all_likes = localStorage.getItem('likes');
+
+            if (all_likes != null) {
+                JSON.parse(all_likes).forEach(element => {
+                    if (element == id) {
+                        nolike.style.display = 'none';
+                        like.style.display = 'unset';
+                    }
+                });
+            }
+        }
+
+        async function setLikes() {
+            const all_likes = localStorage.getItem('likes');
+            let parsed_likes = JSON.parse(all_likes);
+            let likes;
+
+            if (all_likes != null) {
+                let x = 0;
+                if (parsed_likes.length > 0) {
+                    for (x; x < parsed_likes.length;) {
+                        if (parsed_likes[x] == blog_id) {
+                            parsed_likes.splice(x, 1);
+                            localStorage.setItem('likes', JSON.stringify(parsed_likes));
+                            nolike.style.display = 'unset';
+                            like.style.display = 'none';
+                            likeincrement(-1);
+                            break;
+                        }
+
+                        if (x == (parsed_likes.length-1)) {
+                            parsed_likes.push(blog_id);
+                            localStorage.setItem('likes', JSON.stringify(parsed_likes));
+                            nolike.style.display = 'none';
+                            like.style.display = 'unset';
+                            likeincrement(1);
+                            break;
+                        }
+                        x++;
+                    }
+                } else {
+                    parsed_likes.push(blog_id);
+                    localStorage.setItem('likes', JSON.stringify(parsed_likes));
+                    nolike.style.display = 'none';
+                    like.style.display = 'unset';
+                    likeincrement(1);
+                }
+
+            } else {
+                likes = [blog_id];
+                localStorage.setItem('likes', JSON.stringify(likes));
+                nolike.style.display = 'none';
+                like.style.display = 'unset';
+                likeincrement(1);
+            }
+        }
+
+        function likeincrement(num) {
+            if (num < 0 && numLikes <= 0)
+                return;
+
+            numLikes = numLikes+(num);
+            num_likes.innerHTML = numLikes;
+
+            if (num < 0) {
+                fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/articles/${blog_id}/dislike`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then((data) => {})
+            } else {
+                fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/articles/${blog_id}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then((data) => {})
+            }
+        }
+
+        function postComment() {
+            let commentName = localStorage.getItem('user_name');
+            let commentEmail = localStorage.getItem('user_email');
+
+            if (commentEmail == null || commentName == null) {
+                getUser();
+                return;
+            }
+
+            let url = window.location.href;
+            let params = url.split("=");
+            let id = params[1];
+
+            if (id != undefined) {
+                const comment = document.getElementById('comment').value;
+                if (comment == '' || comment.length < 1) {
+                    alert('Comment is required');
+                    return;
+                }
+
+                commentBtn.style.display = 'none';
+                processing.style.display = 'unset';
+                loading = true;
+
+                let payload = {
+                    commenterName: commentName,
+                    commenterEmail: commentEmail,
+                    commentContent: comment
+                }
+
+                fetch(`https://abiseth-portfolio.herokuapp.com/api/v1/articles/${id}/comment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(res => res.json())
+                    .then((data) => {
+
+                        if (data.success == true && data.status == 200) {
+                            comments_block.innerHTML += `
+                                <div class="comment_block">
+                                    <div class="profile">
+                                        <div class="prof"><strong>${payload.commenterName.split('')[0].toUpperCase()}</strong></div>
+                                    </div>
+                                    <div class="comment">
+                                        <p>${payload.commenterName}</p>
+                                        <h5>${payload.commentContent}</h5>
+                                    </div>
+                                </div>
+                            `
+                            no_blogs.style.display = 'none';
+                            alert('Well done 🙂. You have commented 🔥');
+                        } else {
+                            alert('Oops! something went wrong. Try again');
+                        }
+
+                        const commentField = document.getElementById('comment');
+                        commentField.value = '';
+                        processing.style.display = 'none';
+                        commentBtn.style.display = 'unset';
+                        loading = false;
+                    });
+
+            }
+
+        }
+
+        function getUser() {
+            alert('This is your first comment! 🔥. We need some info about you 🙂');
+            let names = ''; 
+            let email = '';
+            names = window.prompt('What are your names?');
+            email = window.prompt('What is your email address?');
+
+            while(names == '' || email == '') {
+                names = window.prompt('Your names are required');
+                email = window.prompt('Your email address is required');
+            }
+
+            localStorage.setItem('user_name', names);
+            localStorage.setItem('user_email', email);
+            postComment();
+        }
+
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>

@@ -498,7 +498,7 @@ body {
 
 .blogs_container .blog {
     width: 30%;
-    height: 62vh;
+    height: auto;
     background: var(--pureWhite);
     border-radius: 0.5em;
     margin-bottom: 2em;
@@ -531,9 +531,25 @@ body {
 }
 
 .blog a {
-    margin: 0.5em 3.8%;
+    margin: 0.5em 3.8% -0.4em 3.8%;
+    padding: 0 !important;
     opacity: 0.9;
     font-size: 0.88em;
+}
+
+.like {
+    width: 5em;
+    height: 5em;
+    position: absolute;
+    top: 8em;
+    right: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.like>svg {
+    cursor: pointer;
 }
 
 .blog_container {
@@ -1046,6 +1062,7 @@ body {
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
+    cursor: pointer;
 }
 
 .chats .comment_block .profile {
@@ -1225,6 +1242,55 @@ input[type="checkbox"] {
     height: auto;
 }
 
+.input_password {
+    margin-top: -0.4em !important;
+    margin-bottom: -0.3em !important;
+    height: 7.5vh !important;
+    background: #e953535d;
+    border-radius: 0.26em;
+    border: 2px solid #e9535383;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f51616be;
+    padding: 0 !important;
+    font-family: var(--poppins);
+    margin: auto;
+    width: 93.8%;
+    margin-left: 0.8em;
+}
+
+.error {
+    display: none;
+} 
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    z-index: 999;
+    background: var(--pureWhite);
+    flex-direction: column;
+}
+
+.loader>img {
+    width: 4em;
+    height: 4em;
+}
+
+.loader>p {
+    font-size: 0.85em;
+    opacity: 0.6;
+    margin-top: 1em;
+}
+
+.loading {
+    display: flex !important;
+}
 /* responsive part*/
 @media only screen and (max-width: 600px) {
     .navigation {

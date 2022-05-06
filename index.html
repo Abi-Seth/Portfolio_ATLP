@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <img src="./assets/loader.gif" alt="">
+        <p>loading . . .</p>
+    </div>
     <div id="main_container">
         <div class="banner">
             <div class="navigation">
@@ -29,7 +33,7 @@
                 </div>
                 <div class="hire_btn">
                     <!-- <button>Hire me</button> -->
-                    <button><a href="./login.html" style="color: white;">Login</a></button>
+                    <button onclick="window.location  = './index.html#contact'"><a style="color: white;">Hire me</a></button>
                 </div>
             </div>
             <div class="banner_content">
@@ -63,7 +67,7 @@
                     <p>If you want to know alittle more about me</p>
                     <p>Everytime I get an idea of a certain project, immediately think about where I will get capital or investors and since I know no where, I stop. We are here to solve that. We make sure you reach the real investors with your prooject being safe.</p>
                     <div class="about_btns">
-                        <button>Contact me for any deals</button>
+                        <button onclick="window.location  = './index.html#contact'">Contact me for any deals</button>
                         <button class="download_btn">Download my resume</button>
                     </div>
                 </div>
@@ -99,18 +103,26 @@
             <div class="form">
                 <h1>Quick contact</h1>
                 <p>Everytime I get an idea of a certain project, immediately think about where I will get capital or investors and since I know no where, I stop. We are here to solve that. We make sure you reach the real investors with your prooject being safe.</p>
-                <div class="form_container">
-                    <div class="input">
-                        <input type="text" placeholder="Enter your names">
+                <div class="form_container" id="form">
+                    <div style="width: 120%" class="input_password error" id="error">
+                        <span>
+                            <h5 id="error_message"></h5>
+                        </span>
                     </div>
                     <div class="input">
-                        <input type="text" placeholder="Enter your email">
+                        <input type="text" id="names" placeholder="Enter your names">
+                    </div>
+                    <div class="input">
+                        <input type="email" id="email" placeholder="Enter your email">
                     </div>
                     <div class="input text_area">
-                        <textarea placeholder="Enter you message . . ." cols="30" rows="10"></textarea>
+                        <textarea id="message" placeholder="Enter you message . . ." cols="30" rows="10"></textarea>
                     </div>
                     <div class="input send_btn">
-                        <button>Send message</button>
+                        <button onclick="contact()">
+                            <a style="color: white;" id="messageBtn">Send message</a>
+                            <a style="color: white;" id="processing">Processing . . .</a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -120,6 +132,110 @@
             <p>Copyright @ abiseth. All right must be reserved</p>
         </div>
     </div>
+    <script>
+
+        document.getElementById('form').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter')
+                contact();
+        })
+
+        let msgBtn = document.getElementById('messageBtn');
+        let processing = document.getElementById('processing');
+        processing.style.display = 'none';
+        let loading = false;
+        let msg = document.getElementById('error_message');
+        let msgContainer = document.getElementById('error');
+        function contact() {
+            if (loading)
+                return;
+
+            msgContainer.classList.add('error');
+            let names = document.getElementById('names').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let message = document.getElementById('message').value;
+            let data = {
+                email,
+                names,
+                message
+            }
+            validateMsgData(data);
+        }
+
+        function validateMsgData(data) {
+
+            if (data.names.length <= 0) {
+                msg.innerHTML = 'Names is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.email.length <= 0) {
+                msg.innerHTML = 'Email address is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.message.length <= 0) {
+                msg.innerHTML = 'Message is required!';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if (data.email.length < 6) {
+                msg.innerHTML = 'Invalid email address';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+                msg.innerHTML = 'Invalid email address';
+                msgContainer.classList.remove('error');
+                return;
+            }
+
+            message(data);
+
+        }
+
+        async function message(data) {
+            msgBtn.style.display = 'none';
+            processing.style.display = 'unset';
+            loading = true;
+
+            let payload = {
+                messageNames: data.names,
+                messageEmail: data.email,
+                messageContent: data.message
+            }
+
+            fetch("https://abiseth-portfolio.herokuapp.com/api/v1/messages/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    let email = document.getElementById('email');
+                    let names = document.getElementById('names');
+                    let message= document.getElementById('message');
+
+                    if (data.success != true && data.status != 200) {
+                        msg.innerHTML = data.message;
+                        msgContainer.classList.remove('error');
+                    }
+
+                    email.value = '';
+                    names.value = '';
+                    message.value = '';
+                    processing.style.display = 'none';
+                    msgBtn.style.display = 'unset';
+                    loading = false;
+                });
+        }
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>
